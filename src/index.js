@@ -3,7 +3,7 @@ import { render } from 'react-dom';
 
 import './styles.scss';
 
-import { createStore } from 'redux';
+import { createStore, bindActionCreators } from 'redux';
 import { connect, Provider } from 'react-redux';
 
 const initialState = {
@@ -13,11 +13,11 @@ const initialState = {
 const INCREMENT = 'INCREMENT';
 const DECREMENT = 'DECREMENT';
 
-const incrementValue = () => ({
+const increment = () => ({
   type: INCREMENT,
 });
 
-const decrementValue = () => ({
+const decrement = () => ({
   type: DECREMENT,
 });
 
@@ -60,14 +60,13 @@ const mapStateToProps = (state) => {
 };
 
 const mapDispatchToProps = (dispatch) => {
-  return {
-    increment() {
-      dispatch(incrementValue());
+  return bindActionCreators(
+    {
+      increment,
+      decrement,
     },
-    decrement() {
-      dispatch(decrementValue());
-    },
-  };
+    dispatch,
+  );
 };
 
 const CounterContainer = connect(mapStateToProps, mapDispatchToProps)(Counter);
